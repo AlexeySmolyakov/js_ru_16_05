@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from 'react-dom'
+import {render} from 'react-dom'
 import ArticleList from './components/ArticleList.js'
 
 const articles = [
@@ -30,4 +30,35 @@ const articles = [
 	}
 ];
 
-render(<ArticleList articles={articles}/>, document.getElementById('container'));
+const comments = [
+	{
+		id: 773,
+		user_name: 'John',
+		text: 'Nice code style.'
+	},
+	{
+		id: 774,
+		user_name: 'Hodor',
+		text: 'Try this out.'
+	},
+	{
+		id: 775,
+		user_name: 'Jammy',
+		text: 'Show once again.'
+	},
+	{
+		id: 776,
+		user_name: 'Bran',
+		text: 'Never stop trying.'
+	},
+	{
+		id: 777,
+		user_name: 'Tirion',
+		text: 'Money is always near.'
+	}
+];
+
+render(
+	<ArticleList articles={articles} comments={comments}/>,
+	document.getElementById('container')
+);

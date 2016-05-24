@@ -3,14 +3,14 @@ import React, {PropTypes, Component} from 'react'
 class Article extends Component {
 	state = {
 		isOpen: false
-	}
+	};
 
 	render () {
 		const {article} = this.props;
 		if (!article) return <h3>No article!</h3>;
-		const {title, text, id} = article;
 
-		const { isOpen } = this.state;
+		const {title, text, id} = article;
+		const {isOpen} = this.state;
 		const textItem = isOpen ? <section>{text}</section> : null;
 
 		return (
