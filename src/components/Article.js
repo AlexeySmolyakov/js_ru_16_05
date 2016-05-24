@@ -1,31 +1,44 @@
 import React, { PropTypes, Component } from 'react'
+import { findDOMNode } from 'react-dom'
 import CommentList from './CommentList'
+import toggleOpen from '../decorators/toggleOpen'
 
 class Article extends Component {
-    state = {
-        isOpen: false,
-        some: 'other'
+    constructor() {
+        super()
+        this.state = {
+            some: ''
+        }
+    }
+
+    componentWillMount() {
+    }
+
+    componentDidMount() {
+        console.log('---', this.refs.title)
+//        debugger
+    }
+
+    componentWillUnmount() {
+
+    }
+
+    componentDidUpdate() {
+        console.log('---', findDOMNode(this.refs.list))
     }
 
     render() {
-        const { article } = this.props
+        const { article, isOpen, toggleOpen } = this.props
         if (!article) return <h3>No article</h3>
 
         const { title, text, comments, id } = article
-        const { isOpen } = this.state
-        const textItem = isOpen ? <section>{text}<div><CommentList comments = {comments} /></div></section> : null
+        const textItem = isOpen ? <section>{text}<div><CommentList comments = {comments} ref="list" /></div></section> : null
         return (
             <div>
-                <h3 onClick = {this.handleClick}>{title}</h3>
+                <h3 onClick = {toggleOpen} ref="title">{title}</h3>
                 {textItem}
             </div>
         )
-    }
-
-    handleClick = (ev) => {
-        this.setState({
-            isOpen : !this.state.isOpen
-        })
     }
 }
 
@@ -35,7 +48,11 @@ Article.propTypes = {
         title: PropTypes.string.isRequired,
         text: PropTypes.string,
         id: PropTypes.string.isRequired
-    })
+    }),
+
+    //From toggleOpen decorator
+    isOpen: PropTypes.bool.isRequired,
+    toggleOpen: PropTypes.func.isRequired
 }
 
-export default Article
+export default toggleOpen(Article)
