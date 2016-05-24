@@ -1,21 +1,18 @@
-import React, {PropTypes} from 'react';
-import Article from './Article.js';
+import React, { PropTypes } from 'react'
+import Article from './ArticleOld'
 
-function ArticleList (props) {
-	const {articles} = props;
-	const articleItems = articles.map(
-		(article) =>
-			<li key={article.id}><Article article={article}/></li>
-	);
-	return (
-		<ul>
-			{articleItems}
-		</ul>
-	)
+function ArticleList(props) {
+    const { articles } = props
+    const articleItems = articles.map((article) => <li key={article.id}><Article article = {article} /></li>)
+    return (
+        <ul>
+            {articleItems}
+        </ul>
+    )
 }
 
 ArticleList.propTypes = {
-	articles: PropTypes.array.isRequired
-};
+    articles: PropTypes.array.isRequired
+}
 
-export default ArticleList;
+export default ArticleList
