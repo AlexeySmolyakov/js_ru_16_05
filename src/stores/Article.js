@@ -1,29 +1,20 @@
-import { EventEmitter } from 'events'
+import BasicStore from './BasicStore'
+import AppDispatcher from '../dispatcher'
+import { DELETE_ARTICLE } from '../constants'
 
-export default class Article extends EventEmitter {
+export default class Article extends BasicStore {
     constructor(initialData = []) {
-        super()
-        this._items = {}
-        initialData.forEach(this._add)
-    }
+        super(initialData)
 
-    getAll = () => Object.keys(this._items).map(this.getById)
+        AppDispatcher.register((action) => {
+            const { type, payload } = action
 
-    getById = (id) => this._items[id]
-
-    _delete = (id) => delete this._items[id]
-
-    _add = (item) => this._items[item.id] = item
-
-    addChangeListener(callback) {
-        this.on('SOME_INTERNAL_EVENT', callback)
-    }
-
-    removeChangeListener(callback) {
-        this.removeListener('SOME_INTERNAL_EVENT', callback)
-    }
-
-    emitChange() {
-        this.emit('SOME_INTERNAL_EVENT')
+            switch (type) {
+                case DELETE_ARTICLE:
+                    this._delete(payload.id)
+                    this.emitChange()
+                    break;
+            }
+        })
     }
 }
